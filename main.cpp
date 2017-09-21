@@ -2,16 +2,16 @@
 #include <png++/png.hpp>
 
 int main() {
-    // Load data
-    Data train_data;
-    Data test_data;
-    load_data(train_data, test_data);
-    
-    // Init kmeans
+	// Load data
+	Data train_data;
+	Data test_data;
+	load_data(train_data, test_data);
 
-    // Run kmeans
+	// Init kmeans
 
-    // Ouput centroids as png pictures
+	// Run kmeans
 
-    return 0;
+	// Ouput centroids as png pictures
+
+	return 0;
 }
