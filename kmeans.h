@@ -1,4 +1,6 @@
 #include "Data.h"
+#include <random>
+#include <ctime>
 using namespace Eigen;
 
 template<int K, int Dimension>
@@ -30,7 +32,7 @@ public:
 
 	// Clusters data and uses that information to predict data classes
 	// returns number_true_classifications
-	int Test(Data& train_data) {
+	int Test(Data& test_data) {
 		// init centroids
 		// init centroid_ids
 		return 0;
@@ -41,15 +43,39 @@ private:
 	Matrix<double, K, 1> centroid_ids;
 
 	void randomInitCentroids(Data& test_data) {
-		// for each i from 1 to K
-		//		set centroid i to be equal to a random example from the test set
+		const int N = test_data.examples.rows();
+		auto eng = std::default_random_engine(std::time(0));
+		auto dist = std::uniform_int_distribution<int>(0, N-1);
+		for (int i = 0; i < K; ++i)
+			centroids.row(i) = test_data.examples.row(dist(eng));
 	}
 
 	void findIdsOfClosestCentroids(Data& test_data) {
-
+		const int N = test_data.examples.rows();
+		for (int i = 0; i < N; ++i) {
+			double min_dist = 0.;
+			for (int k = 0; k < K; ++k) {
+				double dist = (test_data.examples.row(i) - centroids.row(k)).norm();
+				if (dist < min_dist) {
+					min_dist = dist;
+					centroid_ids(i) = k;
+				}
+			}
+		}
 	}
 
 	void computeCentroids(Data& test_data) {
-
+		const int N = test_data.examples.rows();
+		for (int k = 0; k < K; ++k) {
+			centroids.row(k).setZero();
+			int cluster_size = 0;
+			for (int i = 0; i < N; ++i) {
+				if (centroid_ids(i) == k) {
+					centroids.row(k) += test_data.examples.row(i);
+					cluster_size++;
+				}
+			}
+			centroids.row(k) /= cluster_size;
+		}
 	}
 };
