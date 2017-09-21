@@ -1,0 +1,47 @@
+Will need linear algebra
+	use Eigen
+Will need image library
+	use png++
+
+kmeans on mnist
+	k = 10
+	dimension = 28*28
+
+	kmeans<K, dimension> {
+		public
+			vector mean
+			vector standard_deviation
+			matrix centroids
+
+			// Computes mean and standard_deviation on a train set
+			void Train(X)
+
+			// Computes accuracy of class prediction
+			//    Interesting, how do I assign a digit number to the kth cluster?
+			//    The computer doesn't 'know' what an eight is, it only knows that
+			//      these vectors belong together
+			//    If given only unlabeled data, then I cannot,
+			//      After kmeans is finished assign the digit to the kth cluster that
+			//      is most numerous in that cluster
+			number_true_classifications Test(X, Y)
+
+		private
+			vector centroid_ids = findClosestCentroids (X, &centroids)
+			matrix centroids = computeCentroids(X, centroid_ids, K)
+	}
+
+	kmeans = new kMeans<K, 28*28>()
+	kmeans.train(X)
+		compute mean and std
+	kmeans.test(X)
+		randomInitCentroids()
+		iterate
+			ids = findClosestCentroids (data, &centroids)
+			centroids = computeCentroids(X, ids, K)
+		return number_true_classifications
+
+main
+	get_data (Mnist, other)
+	initialilze kmeans object
+	run kmeans
+	output centroids as pngs
