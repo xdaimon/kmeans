@@ -38,7 +38,6 @@ xxxx     unsigned byte   ??               label
 The labels values range from 0 to 9
  */ // clang-format on
 
-#include <filesystem>
 
 void load_data(Data& train_data, Data& test_data) {
 	const char* train_img_file = "../train-images.idx3-ubyte";
@@ -63,7 +62,7 @@ void load_data(Data& train_data, Data& test_data) {
 	train_data.examples = MatrixXd::Zero(28 * 28, 60000);
 	for (int i = 0; i < 60000; ++i)
 		for (int j = 0; j < 28 * 28; ++j)
-			train_data.examples(j, i  = file[j + i * 28 * 28] / 256.;
+			train_data.examples(j, i)  = file[j + i * 28 * 28] / 256.;
 
 	// Train Labels
 	read_file(train_lbl_file, 8);
