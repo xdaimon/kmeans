@@ -28,6 +28,7 @@ kmeans on mnist
 		private
 			vector centroid_ids = findIdsOfClosestCentroids (X, &centroids)
 			matrix centroids = computeCentroids(X, centroid_ids, K)
+			void randomInitCentroids()
 	}
 
 	kmeans = new kMeans<K, 28*28>()

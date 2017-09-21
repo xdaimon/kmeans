@@ -40,6 +40,11 @@ private:
 
 	Matrix<double, K, 1> centroid_ids;
 
+	void randomInitCentroids(Data& test_data) {
+		// for each i from 1 to K
+		//		set centroid i to be equal to a random example from the test set
+	}
+
 	void findIdsOfClosestCentroids(Data& test_data) {
 
 	}
