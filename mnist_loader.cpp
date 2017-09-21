@@ -40,10 +40,10 @@ The labels values range from 0 to 9
 
 
 void load_data(Data& train_data, Data& test_data) {
-	const char* train_img_file = "../train-images.idx3-ubyte";
-	const char* train_lbl_file = "../train-labels.idx1-ubyte";
-	const char* test_img_file = "../t10k-images.idx3-ubyte";
-	const char* test_lbl_file = "../t10k-labels.idx1-ubyte";
+	const char* train_img_file = "../train-images-idx3-ubyte";
+	const char* train_lbl_file = "../train-labels-idx1-ubyte";
+	const char* test_img_file = "../t10k-images-idx3-ubyte";
+	const char* test_lbl_file = "../t10k-labels-idx1-ubyte";
 
 	// train_data gets 60000 images from the first img file
 	// test_data gets all images from the second img file
