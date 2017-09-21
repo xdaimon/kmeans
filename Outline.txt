@@ -26,7 +26,7 @@ kmeans on mnist
 			number_true_classifications Test(X, Y)
 
 		private
-			vector centroid_ids = findClosestCentroids (X, &centroids)
+			vector centroid_ids = findIdsOfClosestCentroids (X, &centroids)
 			matrix centroids = computeCentroids(X, centroid_ids, K)
 	}
 
@@ -35,13 +35,15 @@ kmeans on mnist
 		compute mean and std
 	kmeans.test(X)
 		randomInitCentroids()
+		vector ids = 0
 		iterate
-			ids = findClosestCentroids (data, &centroids)
-			centroids = computeCentroids(X, ids, K)
+			centroid_ids = findIdsOfClosestCentroids (data, &centroids)
+			centroids = computeCentroids(X, centroid_ids, K)
 		return number_true_classifications
 
 main
-	get_data (Mnist, other)
-	initialilze kmeans object
+	get_data (mnist, other)
+	initialilze kmeans
+	train kmeans
 	run kmeans
 	output centroids as pngs
