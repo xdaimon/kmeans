@@ -59,10 +59,10 @@ void load_data(Data& train_data, Data& test_data) {
 
 	// Train Images
 	read_file(train_img_file, 16);
-	train_data.examples = MatrixXd::Zero(28 * 28, 60000);
+	train_data.examples = MatrixXd::Zero(60000, 28*28);
 	for (int i = 0; i < 60000; ++i)
 		for (int j = 0; j < 28 * 28; ++j)
-			train_data.examples(j, i)  = file[j + i * 28 * 28] / 256.;
+			train_data.examples(i, j)  = file[j + i * 28 * 28] / 256.;
 
 	// Train Labels
 	read_file(train_lbl_file, 8);
@@ -72,10 +72,10 @@ void load_data(Data& train_data, Data& test_data) {
 
 	// Test Images
 	read_file(test_img_file, 16);
-	test_data.examples = MatrixXd::Zero(28 * 28, 10000);
+	test_data.examples = MatrixXd::Zero(10000, 28*28);
 	for (int i = 0; i < 10000; ++i)
 		for (int j = 0; j < 28 * 28; ++j)
-			test_data.examples(j, i) = file[j + i * 28 * 28] / 256.;
+			test_data.examples(i, j) = file[j + i * 28 * 28] / 256.;
 
 	// Test labels
 	read_file(test_lbl_file, 8);
