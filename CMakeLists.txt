@@ -3,7 +3,7 @@ project(main)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -std=c++17")
 
-set(SOURCE_FILES main.cpp mnist_loader.cpp kmeans.cpp)
+set(SOURCE_FILES main.cpp mnist_loader.cpp)
 
 include_directories(.)
 
