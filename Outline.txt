@@ -16,7 +16,7 @@ kmeans on mnist
 			// Computes mean and standard_deviation on a train set
 			void Train(X)
 
-			// Computes accuracy of class prediction
+			// Clusters data and uses that information to predict data classes
 			//    Interesting, how do I assign a digit number to the kth cluster?
 			//    The computer doesn't 'know' what an eight is, it only knows that
 			//      these vectors belong together
