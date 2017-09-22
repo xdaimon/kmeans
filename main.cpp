@@ -21,6 +21,16 @@ int main() {
 	std::cout << "Accuracy: " << accuracy << std::endl;
 
 	// Ouput centroids as png pictures
+	png::image< png::rgb_pixel > image(28, 28);
+	for (size_t y = 0; y < image.get_height(); ++y)
+	{
+		for (size_t x = 0; x < image.get_width(); ++x)
+		{
+			unsigned char p = 255 - int(255.*kmeans.centroids.block<1,D>(0,0)(x + 28*y));
+			image[y][x] = png::rgb_pixel(p, p, p);
+		}
+	}
+	image.write("rgb.png");
 
 	return 0;
 }
