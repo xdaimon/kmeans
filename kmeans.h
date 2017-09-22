@@ -31,21 +31,22 @@ public:
 	}
 
 	// Clusters data and uses that information to predict data classes
-	// returns number_true_classifications
-	int Test(Data& test_data) {
+	// returns percent correctly classified
+	double Test(Data& test_data) {
+		centroid_ids = VectorXi::Zero(test_data.labels.size());
 		randomInitCentroids(test_data);
 		for (int iter = 0; iter < Iterations; ++iter) {
 			findIdsOfClosestCentroids(test_data);
 			computeCentroids(test_data);
-			std::cout << iter << std::endl;
+			std::cout << "Iter: " << iter << "    Accuracy: " << computeAccuracy(test_data) << std::endl;
 		}
 		return computeAccuracy(test_data);
 	}
 
 private:
 
-	Matrix<double, K, 1> centroid_ids;
-	Matrix<double, K, 1> cluster_identity;
+	VectorXi centroid_ids;
+	Matrix<int, K, 1> cluster_identity;
 
 	void randomInitCentroids(Data& test_data) {
 		const int N = test_data.examples.rows();
@@ -58,9 +59,9 @@ private:
 	void findIdsOfClosestCentroids(Data& test_data) {
 		const int N = test_data.examples.rows();
 		for (int i = 0; i < N; ++i) {
-			double min_dist = 0.;
+			double min_dist = std::numeric_limits<double>::infinity();
 			for (int k = 0; k < K; ++k) {
-				double dist = (test_data.examples.row(i) - centroids.row(k)).norm();
+				double dist = (test_data.examples.row(i) - centroids.row(k)).squaredNorm();
 				if (dist < min_dist) {
 					min_dist = dist;
 					centroid_ids(i) = k;
@@ -71,17 +72,15 @@ private:
 
 	void computeCentroids(Data& test_data) {
 		const int N = test_data.examples.rows();
-		for (int k = 0; k < K; ++k) {
-			centroids.row(k).setZero();
-			int cluster_size = 0;
-			for (int i = 0; i < N; ++i) {
-				if (centroid_ids(i) == k) {
-					centroids.row(k) += test_data.examples.row(i);
-					cluster_size++;
-				}
-			}
-			centroids.row(k) /= cluster_size;
+		Matrix<int, K, 1> cluster_sizes;
+		centroids.setZero();
+		cluster_sizes.setZero();
+		for (int i = 0; i < N; ++i) {
+			centroids.row(centroid_ids(i)) += test_data.examples.row(i);
+			cluster_sizes(centroid_ids(i)) += 1;
 		}
+		for (int k = 0; k < K; ++k)
+			centroids.row(k) /= cluster_sizes(k);
 	}
 
 	void findClusterIdentity(Data& test_data) {
@@ -99,7 +98,7 @@ private:
 			count_vectors(centroid_ids(i), test_data.labels(i)) += 1;
 		}
 		for (int k = 0; k < K; ++k) {
-			int max_count = 0;
+			int max_count = -1;
 			for (int i = 0; i < K; ++i) {
 				if (count_vectors(k, i) > max_count) {
 					cluster_identity(k) = i;
