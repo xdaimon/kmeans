@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Data.h"
-
-void load_data(Data& train_data, Data& test_data);
-
+#include <eigen3/Eigen/Eigen>
+struct Data
+{
+	Eigen::MatrixXd examples;
+	Eigen::VectorXi labels;
+};
+void load_data(Data& test_data);

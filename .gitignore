@@ -1,3 +1,11 @@
 .vscode
 build
 *ubyte
+*.png
+.vscode
+.vs
+*vcxproj*
+*.dll
+Debug
+Release
+*.sln
